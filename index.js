@@ -18,11 +18,13 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
 	try {
 		if (!req.file) throw new Error('Missing file');
 
-		const file = req.file;
+		const data = {
+			name: req.file.originalname,
+			type: req.file.mimetype,
+			size: req.file.size,
+		};
 
-		res
-			.status(200)
-			.json({ name: file.filename, size: file.size, type: file.mimetype });
+		res.status(200).json(data);
 	} catch (e) {
 		res.status(400).json({ message: e.message });
 	}
