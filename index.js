@@ -20,7 +20,9 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
 
 		const file = req.file;
 
-		res.status(200).json(file);
+		res
+			.status(200)
+			.json({ name: file.filename, size: file.size, type: file.mimetype });
 	} catch (e) {
 		res.status(400).json({ message: e.message });
 	}
